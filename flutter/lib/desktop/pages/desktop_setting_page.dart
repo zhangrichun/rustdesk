@@ -64,20 +64,20 @@ enum SettingsTabKey {
 class DesktopSettingPage extends StatefulWidget {
   final SettingsTabKey initialTabkey;
   static final List<SettingsTabKey> tabKeys = [
-    SettingsTabKey.general,
-    if (!isWeb &&
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y') SettingsTabKey.general,
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && !isWeb &&
         !bind.isOutgoingOnly() &&
         !bind.isDisableSettings() &&
         bind.mainGetBuildinOption(key: kOptionHideSecuritySetting) != 'Y')
       SettingsTabKey.safety,
-    if (!bind.isDisableSettings() &&
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && !bind.isDisableSettings() &&
         bind.mainGetBuildinOption(key: kOptionHideNetworkSetting) != 'Y')
       SettingsTabKey.network,
-    if (!bind.isIncomingOnly()) SettingsTabKey.display,
-    if (!isWeb && !bind.isIncomingOnly() && bind.pluginFeatureIsEnabled())
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && !bind.isIncomingOnly()) SettingsTabKey.display,
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && !isWeb && !bind.isIncomingOnly() && bind.pluginFeatureIsEnabled())
       SettingsTabKey.plugin,
-    if (!bind.isDisableAccount()) SettingsTabKey.account,
-    if (isWindows &&
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && !bind.isDisableAccount()) SettingsTabKey.account,
+    if (bind.mainGetBuildinOption(key: 'sos-mode') != 'Y' && isWindows &&
         bind.mainGetBuildinOption(key: kOptionHideRemotePrinterSetting) != 'Y')
       SettingsTabKey.printer,
     SettingsTabKey.about,
@@ -1282,8 +1282,8 @@ class _SafetyState extends State<_Safety> with AutomaticKeepAliveClientMixin {
             if (usePassword && !isChangePermanentPasswordDisabled())
               _SubButton('Set permanent password', setPasswordDialog,
                   permEnabled && !locked),
-            // if (usePassword)
-            //   hide_cm(!locked).marginOnly(left: _kContentHSubMargin - 6),
+            if (usePassword)
+              hide_cm(!locked).marginOnly(left: _kContentHSubMargin - 6),
             if (usePassword) radios[2],
           ]);
         })));
